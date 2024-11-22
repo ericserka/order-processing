@@ -1,31 +1,17 @@
 import repl from 'repl'
 import { OrderOrchestrator } from './orderOrchestrator'
 import { OrderRepository } from './orderRepository'
-import { IInventoryService, IPaymentService } from './interfaces'
 import { InventoryValidator } from './inventoryValidator'
 import { PaymentProcessor } from './paymentProcessor'
 import { EmailNotification } from './notifications/email'
 import { PushNotification } from './notifications/push'
 import { OrderStatus } from './enums'
+import { InventoryService } from './services/inventory'
+import { PaymentService } from './services/payment'
 
 const orderRepository = new OrderRepository()
-const inventoryService: IInventoryService = {
-  checkAvailability: async () => {
-    console.log('Checking availability...')
-
-    return true
-  },
-  reserveItems: async () => {
-    console.log('Reserving items...')
-  }
-};
-const paymentService: IPaymentService = {
-  processPayment: async () => {
-    console.log('Processing payment...')
-
-    return true
-  }
-};
+const inventoryService = new InventoryService()
+const paymentService = new PaymentService()
 
 // Criando orquestrador
 const orchestrator = new OrderOrchestrator(orderRepository);
